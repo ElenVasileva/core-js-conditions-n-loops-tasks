@@ -335,8 +335,19 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const { length } = matrix;
+  const link = matrix;
+  const copy = Array(length);
+  for (let i = 0; i < length; i += 1) {
+    copy[i] = [...matrix[i]];
+  }
+
+  for (let i = 0; i < length; i += 1) {
+    for (let j = 0; j < length; j += 1) {
+      link[i][j] = copy[length - 1 - j][i];
+    }
+  }
 }
 
 /**
@@ -389,8 +400,27 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  const findNextPlace = (prevPlace, length) => {
+    if (prevPlace % 2 === 0) {
+      return prevPlace / 2;
+    }
+    return (length + prevPlace - 1) / 2;
+  };
+
+  const newPlaces = Array(str.length);
+  for (let i = 0; i < str.length; i += 1) {
+    let place = i;
+    for (let j = 0; j < iterations; j += 1) {
+      place = findNextPlace(place, str.length);
+    }
+    newPlaces[place] = i;
+  }
+  let shuffled = '';
+  for (let i = 0; i < newPlaces.length; i += 1) {
+    shuffled += str[newPlaces[i]];
+  }
+  return shuffled;
 }
 
 /**
